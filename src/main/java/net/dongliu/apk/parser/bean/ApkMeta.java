@@ -4,7 +4,9 @@ import net.dongliu.apk.parser.AbstractApkFile;
 
 import javax.annotation.Nullable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Apk meta info
@@ -49,6 +51,7 @@ public class ApkMeta {
     private final List<String> usesPermissions;
     private final List<UseFeature> usesFeatures;
     private final List<Permission> permissions;
+    private final Map<String, Object> metas;
 
     private ApkMeta(Builder builder) {
         packageName = builder.packageName;
@@ -81,6 +84,7 @@ public class ApkMeta {
         usesPermissions = builder.usesPermissions;
         usesFeatures = builder.usesFeatures;
         permissions = builder.permissions;
+        metas = builder.metas;
     }
 
     public static Builder newBuilder() {
@@ -170,6 +174,10 @@ public class ApkMeta {
 
     public void addUsesPermission(String permission) {
         this.usesPermissions.add(permission);
+    }
+
+    public Map<String, Object> getMetas(){
+        return metas;
     }
 
     /**
@@ -285,6 +293,7 @@ public class ApkMeta {
         private List<String> usesPermissions = new ArrayList<>();
         private List<UseFeature> usesFeatures = new ArrayList<>();
         private List<Permission> permissions = new ArrayList<>();
+        private Map<String, Object> metas = new HashMap<>();
 
         private Builder() {
         }
@@ -436,6 +445,11 @@ public class ApkMeta {
 
         public Builder addPermissions(Permission permission) {
             this.permissions.add(permission);
+            return this;
+        }
+
+        public Builder addMeta(String key, Object value) {
+            this.metas.put(key, value);
             return this;
         }
 
